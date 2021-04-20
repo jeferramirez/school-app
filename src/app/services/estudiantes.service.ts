@@ -5,17 +5,16 @@ import { environment } from 'environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ProfesorService {
-  URLAPI =`${environment.URLAPI}profesores`;
+export class EstudiantesService {
+
+  URLAPI =`${environment.URLAPI}estudiantes`;
   constructor(private http: HttpClient) { }
 
   getAll () {
     return this.http.get<any []>(this.URLAPI);
   }
 
-  create(asignatura: any) {
-    return this.http.post(this.URLAPI, asignatura);
+  create(estudiante: any) {
+    return this.http.post(this.URLAPI, estudiante);
   }
-
-  
 }
