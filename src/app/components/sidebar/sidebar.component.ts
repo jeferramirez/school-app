@@ -13,7 +13,6 @@ export const ROUTES: RouteInfo[] = [
     { path: '/cursos', title: 'Cursos',  icon:'fa fa-laptop', class: '' },
     { path: '/asignaturas', title: 'Asignaturas',  icon:'fa fa-book', class: '' },
     { path: '/profesores', title: 'Profesores',  icon:'fa fa-users', class: '' },
-    { path: '/estudiantes', title: 'Estudiantes',  icon:'fa fa-graduation-cap', class: '' },
 
 
 ];
