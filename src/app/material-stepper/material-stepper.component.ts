@@ -83,6 +83,7 @@ export class MaterialStepperComponent implements OnInit {
       this.dataSource.data = event.option.value.estudiantes;
       
     }else {
+      this.secondFormGroup.get('asignatura').setValue('');
       this.asignaturas = event.option.value.asignaturas;
     }
   }
