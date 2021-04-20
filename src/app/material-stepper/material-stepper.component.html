@@ -1,0 +1,55 @@
+<mat-vertical-stepper #stepper linear>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Escriba el nombre de un profesor</ng-template>
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre</mat-label>
+        <input type="text" placeholder="Buscar profesor" aria-label="Nombre" matInput formControlName="nombre"
+          [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.nombre">
+            {{option.nombre}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div>
+        <button class="btn-success" mat-raised-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Selecciona una asignatura</ng-template>
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre</mat-label>
+        <input type="text" placeholder="Buscar asignatura" aria-label="Nombre" matInput formControlName="asignatura"
+          [matAutocomplete]="auto2">
+        <mat-autocomplete #auto2="matAutocomplete">
+          <mat-option *ngFor="let option of filteredAsignaturas | async" [value]="option.nombre">
+            {{option.nombre}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div>
+        <button  class="btn-info" mat-raised-button matStepperPrevious>Regresar</button>
+        <button  class="btn-success" mat-raised-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Estudiantes matriculados en el curso</ng-template>
+ 
+    <div style="margin-top: 10px">
+      <app-material-table [dataSource]="dataSource" [columns]="displayedColumns" [searchString]="'Buscar un estudiante'"></app-material-table>
+      <h5 class="text-center" *ngIf="dataSource.data.length == 0"> <strong> Sin Registros, regrese e intente con un dato diferente</strong></h5> 
+    </div>
+   
+    <div style="margin-top: 20px">
+      <button class="btn-info" mat-raised-button matStepperPrevious>Regresar</button>
+
+    </div>
+  </mat-step>
+
+</mat-vertical-stepper>
