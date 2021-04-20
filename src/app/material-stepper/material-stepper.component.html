@@ -6,8 +6,8 @@
         <mat-label>Nombre</mat-label>
         <input type="text" placeholder="Buscar profesor" aria-label="Nombre" matInput formControlName="nombre"
           [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.nombre">
+        <mat-autocomplete #auto="matAutocomplete"  [displayWith]="displayFn" (optionSelected)="setDataSource($event, 'profesor')">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
             {{option.nombre}}
           </mat-option>
         </mat-autocomplete>
@@ -25,9 +25,9 @@
         <mat-label>Nombre</mat-label>
         <input type="text" placeholder="Buscar asignatura" aria-label="Nombre" matInput formControlName="asignatura"
           [matAutocomplete]="auto2">
-        <mat-autocomplete #auto2="matAutocomplete">
-          <mat-option *ngFor="let option of filteredAsignaturas | async" [value]="option.nombre">
-            {{option.nombre}}
+        <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn" (optionSelected)="setDataSource($event, 'asignatura')">
+          <mat-option *ngFor="let option of filteredAsignaturas | async" [value]="option">
+            {{option.nombre + ' '}} {{option.id}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>

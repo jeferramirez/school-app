@@ -33,26 +33,16 @@ export class MaterialStepperComponent implements OnInit {
     this.filteredOptions = this.firstFormGroup.get('nombre').valueChanges
     .pipe(
       startWith(''),
-      map(value => {
-       const filtro = this._filter(value, 'profesor');
-       console.log(filtro);
-       this.asignaturas = filtro[0]?.asignaturas ? filtro[0].asignaturas : [] ;
-       return filtro;
-      }),
+      map(value => typeof value === 'string' ? value : value.nombre),
+      map(name => name ? this._filter(name, 'profesor') : this.profesores.slice())
     
     );
 
     this.filteredAsignaturas = this.secondFormGroup.get('asignatura').valueChanges
     .pipe(
       startWith(''),
-      map(value => {
-       
-       const filtro =  this._filter(value,'asignatura')
-
-       this.dataSource.data = filtro[0]?.estudiantes ? filtro[0].estudiantes : [] ;
-       return filtro;
-      
-      })
+      map(value => typeof value === 'string' ? value : value.nombre),
+      map(name => name ? this._filter(name, 'asignatura') : this.asignaturas.slice())
     );
 
   }
@@ -66,6 +56,10 @@ export class MaterialStepperComponent implements OnInit {
     return collections[name].filter(option => option.nombre.toLowerCase().includes(filterValue));
   }
 
+
+  displayFn(user: any): string {
+    return user && user.nombre ? user.nombre : '';
+  }
   
 
   initForms() {
@@ -82,9 +76,15 @@ export class MaterialStepperComponent implements OnInit {
     this.profesoresSrv.getAll().subscribe( resp => this.profesores = resp.length > 0? resp : [])
   }
 
-  onChangeProfesor(event) {
 
+  setDataSource(event, entidad) {
     console.log(event);
+    if (entidad == 'asignatura') {
+      this.dataSource.data = event.option.value.estudiantes;
+      
+    }else {
+      this.asignaturas = event.option.value.asignaturas;
+    }
   }
 
 }
